@@ -1,6 +1,7 @@
 """
 Generate publication-ready DOCX with embedded tables and figures
 Author: Dr. Siddalingaiah H S
+REVISED: Fixed sequential reference numbering
 """
 
 import re
@@ -118,6 +119,7 @@ def create_manuscript():
     doc.add_page_break()
     
     # ===== INTRODUCTION =====
+    # REFERENCES APPEAR SEQUENTIALLY: 1-17, then 18 (TB pipeline) 
     doc.add_heading('1. INTRODUCTION', level=1)
     
     intro_paras = [
@@ -133,7 +135,7 @@ def create_manuscript():
         
         'Mycobacterium leprae, sharing substantial genomic homology with M. tuberculosis despite massive gene decay, employs similar immune evasion mechanisms including phagosome maturation arrest, inhibition of autophagy, and modulation of pattern recognition receptor signaling.^17^ This suggests that HDT strategies validated for tuberculosis may be transferable to leprosy. However, leprosy presents unique challenges: M. leprae cannot be cultured in vitro, limiting drug screening; the armadillo is the only laboratory animal model for disseminated infection; and the extremely slow replication rate (doubling time ~14 days) necessitates prolonged preclinical studies.',
         
-        'Computational approaches integrating multi-omics data with chemical databases offer a powerful method to overcome these limitations and accelerate target identification. We previously developed and validated an automated informatics pipeline for identifying HDT targets in tuberculosis, demonstrating its ability to prioritize druggable candidates and identify repurposable compounds with clinical evidence.^21^ In this study, we extended this pipeline to leprosy, integrating published transcriptomic signatures from four independent GEO datasets with druggability assessments from Open Targets Platform and compound bioactivity data from ChEMBL database to systematically identify host targets amenable to pharmacological intervention.'
+        'Computational approaches integrating multi-omics data with chemical databases offer a powerful method to overcome these limitations and accelerate target identification. We previously developed and validated an automated informatics pipeline for identifying HDT targets in tuberculosis, demonstrating its ability to prioritize druggable candidates and identify repurposable compounds with clinical evidence.^18^ In this study, we extended this pipeline to leprosy, integrating published transcriptomic signatures from four independent GEO datasets with druggability assessments from Open Targets Platform and compound bioactivity data from ChEMBL database to systematically identify host targets amenable to pharmacological intervention.'
     ]
     
     for text in intro_paras:
@@ -141,22 +143,23 @@ def create_manuscript():
         add_formatted_run(p, text)
     
     # ===== METHODS =====
+    # REFERENCES: 19-27
     doc.add_heading('2. MATERIALS AND METHODS', level=1)
     
     doc.add_heading('2.1 Study Design', level=2)
     p = doc.add_paragraph()
-    add_formatted_run(p, 'This computational, in silico study employed a systems biology approach to integrate publicly available leprosy transcriptomic data with chemical-genomic databases.^22^ The analysis was conducted in accordance with FAIR principles.')
+    add_formatted_run(p, 'This computational, in silico study employed a systems biology approach to integrate publicly available leprosy transcriptomic data with chemical-genomic databases.^19^ The analysis was conducted in accordance with FAIR principles.')
     
     doc.add_heading('2.2 Host Gene Signature Curation', level=2)
     p = doc.add_paragraph()
-    add_formatted_run(p, 'A 50-gene leprosy host signature was compiled from published transcriptomic studies and Gene Expression Omnibus (GEO) datasets.^23^ The following datasets were utilized: GSE16844 (skin lesion transcriptomes comparing leprosy patients with controls),^24^ GSE125943 (whole blood signatures during leprosy reactions),^25^ GSE129033 (peripheral blood mononuclear cell profiles across the leprosy spectrum),^26^ and GSE74481 (skin transcriptomes during immune reactions).^27^ This multi-dataset approach enabled identification of genes consistently dysregulated across diverse sample types and clinical presentations.')
+    add_formatted_run(p, 'A 50-gene leprosy host signature was compiled from published transcriptomic studies and Gene Expression Omnibus (GEO) datasets.^20^ The following datasets were utilized: GSE16844 (skin lesion transcriptomes comparing leprosy patients with controls),^21^ GSE125943 (whole blood signatures during leprosy reactions),^22^ GSE129033 (peripheral blood mononuclear cell profiles across the leprosy spectrum),^23^ and GSE74481 (skin transcriptomes during immune reactions).^24^ This multi-dataset approach enabled identification of genes consistently dysregulated across diverse sample types and clinical presentations.')
     
     p = doc.add_paragraph()
     add_formatted_run(p, 'Genes were selected based on three criteria: (1) consistent differential expression across studies (|log₂ fold change| ≥1.0), (2) statistical significance (adjusted p-value <0.05), and (3) biological relevance to leprosy immunopathology based on literature review. The final signature encompassed genes involved in immune checkpoint regulation (PDL1, CTLA4, PD1), cytokine signaling (JAK2, STAT1, STAT3, IL6, IL10, TNF), tryptophan metabolism (IDO1), pattern recognition (TLR2, TLR10, NOD2), and tissue remodeling (MMP9, VEGFA). This curated approach balanced statistical rigor with biological plausibility, prioritizing genes with established roles in mycobacterial immunity.')
     
     doc.add_heading('2.3 Computational Pipeline', level=2)
     p = doc.add_paragraph()
-    add_formatted_run(p, 'The automated pipeline (Python 3.12) integrated: MyGene.info for gene-protein mapping,^28^ Open Targets Platform for druggability assessment,^29^ and ChEMBL database (v33) for compound bioactivity mining.^30^')
+    add_formatted_run(p, 'The automated pipeline (Python 3.12) integrated: MyGene.info for gene-protein mapping,^25^ Open Targets Platform for druggability assessment,^26^ and ChEMBL database (v33) for compound bioactivity mining.^27^')
     
     doc.add_heading('2.4 Target Prioritization Algorithm', level=2)
     p = doc.add_paragraph()
@@ -165,6 +168,7 @@ def create_manuscript():
     doc.add_page_break()
     
     # ===== RESULTS =====
+    # REFERENCES: 28-32
     doc.add_heading('3. RESULTS', level=1)
     
     doc.add_heading('3.1 Host Target Prioritization', level=2)
@@ -265,11 +269,11 @@ def create_manuscript():
     
     p = doc.add_paragraph()
     p.add_run('IDO1 (Rank 3): ').bold = True
-    add_formatted_run(p, 'IDO1 is robustly validated in leprosy literature. De Mattos Barbosa et al. demonstrated that M. leprae induces IDO1 expression in monocytes via IL-10-dependent mechanisms.^18^ IDO1 expression is significantly elevated in lepromatous lesions.^33^')
+    add_formatted_run(p, 'IDO1 is robustly validated in leprosy literature. De Mattos Barbosa et al. demonstrated that M. leprae induces IDO1 expression in monocytes via IL-10-dependent mechanisms.^28^ IDO1 expression is significantly elevated in lepromatous lesions.^29^')
     
     p = doc.add_paragraph()
     p.add_run('PDL1/CD274 (Rank 2): ').bold = True
-    add_formatted_run(p, 'PD-1/PD-L1 signaling is critically implicated in leprosy immunopathology. Palermo et al. demonstrated elevated PD-1 expression on T cells in lepromatous patients.^19^ In vitro blockade restores IFN-γ production.^34^')
+    add_formatted_run(p, 'PD-1/PD-L1 signaling is critically implicated in leprosy immunopathology. Palermo et al. demonstrated elevated PD-1 expression on T cells in lepromatous patients.^30^ In vitro blockade restores IFN-γ production.^31^')
     
     p = doc.add_paragraph()
     p.add_run('JAK2 (Rank 8): ').bold = True
@@ -322,6 +326,7 @@ def create_manuscript():
     doc.add_page_break()
     
     # ===== DISCUSSION =====
+    # REFERENCES: 28, 18, 15, 30, 31, 16, 32, 16, 33, 16 (already used or new)
     doc.add_heading('4. DISCUSSION', level=1)
     
     discussion_paras = [
@@ -329,11 +334,11 @@ def create_manuscript():
         
         'The prioritization algorithm weighted multiple evidence streams, with omics strength (35%) and Open Targets druggability evidence (25%) contributing most heavily to composite scores. This weighting reflects the dual imperatives of biological relevance and therapeutic tractability. Targets with high composite scores demonstrated convergent evidence from transcriptomic dysregulation, established druggability, and literature validation, providing confidence in their potential as HDT candidates.',
         
-        'IDO1 emerged as the third-ranked target with compelling literature validation spanning mechanistic, expression, and functional studies. The IDO1-kynurenine pathway represents a critical mechanism by which M. leprae establishes immune tolerance in the host.^18^ In lepromatous leprosy, elevated IDO1 expression in lesional macrophages and Schwann cells depletes local tryptophan, starving pathogen-reactive T cells while generating immunosuppressive kynurenine metabolites that promote regulatory T-cell differentiation. This mechanism parallels findings in tuberculosis granulomas, where IDO1 activity correlates with disease progression and treatment failure.^21^',
+        'IDO1 emerged as the third-ranked target with compelling literature validation spanning mechanistic, expression, and functional studies. The IDO1-kynurenine pathway represents a critical mechanism by which M. leprae establishes immune tolerance in the host.^28^ In lepromatous leprosy, elevated IDO1 expression in lesional macrophages and Schwann cells depletes local tryptophan, starving pathogen-reactive T cells while generating immunosuppressive kynurenine metabolites that promote regulatory T-cell differentiation. This mechanism parallels findings in tuberculosis granulomas, where IDO1 activity correlates with disease progression and treatment failure.^18^',
         
         'IDO1 inhibitors, including epacadostat (INCB024360) and indoximod (NLG-8189), have been developed for oncology applications based on the rationale that tumors exploit IDO1 to evade immune surveillance.^15^ While clinical trials in cancer have yielded mixed results, the infectious disease context may differ fundamentally. In cancer, IDO1 inhibition aims to unleash pre-existing anti-tumor immunity; in leprosy, it could reverse pathogen-induced tolerogenic programming. However, the dual role of IDO1 in both antimicrobial defense (through tryptophan starvation of intracellular pathogens) and tissue protection (limiting immunopathology) necessitates careful dose-finding and patient selection in preclinical studies.',
         
-        'The identification of PDL1 (CD274) and CTLA4 among top targets aligns with emerging evidence that M. leprae exploits immune checkpoint pathways to evade host immunity.^19^ Palermo et al. demonstrated that PD-1 expression on CD4+ and CD8+ T cells is significantly elevated in lepromatous patients compared to tuberculoid patients or healthy controls, correlating with disease severity and bacterial index. In vitro blockade of PD-1/PD-L1 interaction restores IFN-γ production and T-cell proliferation, suggesting that checkpoint inhibitors could reverse T-cell exhaustion in leprosy.^34^',
+        'The identification of PDL1 (CD274) and CTLA4 among top targets aligns with emerging evidence that M. leprae exploits immune checkpoint pathways to evade host immunity.^30^ Palermo et al. demonstrated that PD-1 expression on CD4+ and CD8+ T cells is significantly elevated in lepromatous patients compared to tuberculoid patients or healthy controls, correlating with disease severity and bacterial index. In vitro blockade of PD-1/PD-L1 interaction restores IFN-γ production and T-cell proliferation, suggesting that checkpoint inhibitors could reverse T-cell exhaustion in leprosy.^31^',
         
         'Checkpoint inhibitors (pembrolizumab, nivolumab, ipilimumab) have transformed oncology, achieving durable responses in previously untreatable malignancies. However, their application in infectious diseases remains investigational, with limited data from chronic viral infections (HIV, HCV) and emerging interest in tuberculosis.^16^ In leprosy, potential benefits include restoring antimicrobial immunity in anergic lepromatous patients who fail to mount effective cell-mediated responses. However, excessive immune activation could theoretically precipitate or exacerbate leprosy reactions—the very complications HDT aims to prevent. This paradox necessitates careful patient stratification, potentially restricting checkpoint blockade to paucibacillary patients or combining it with anti-inflammatory agents.',
         
@@ -341,7 +346,7 @@ def create_manuscript():
         
         'The JAK-STAT pathway mediates signaling for numerous cytokines implicated in leprosy immunopathology, including IFN-γ, IL-6, IL-10, IL-12, and IL-23. Selective JAK inhibition could theoretically modulate specific cytokine axes while preserving others. For example, JAK1/JAK2 inhibition would dampen IFN-γ and IL-6 signaling (potentially beneficial in ENL) while sparing JAK3-dependent IL-2 signaling (important for T-cell homeostasis). However, broad immunosuppression raises concerns about reactivation of latent infections, particularly tuberculosis in endemic regions where TB-leprosy co-infection occurs.',
         
-        'The substantial overlap between leprosy and tuberculosis HDT targets underscores the shared mycobacterial host-pathogen interface. Both pathogens induce IDO1, exploit PD-1/PD-L1 signaling, drive MMP-mediated tissue damage, and modulate vitamin D receptor signaling.^16,35^ This convergence has important translational implications. First, HDT candidates validated for tuberculosis (where larger patient populations and research infrastructure enable clinical trials) may accelerate leprosy drug development through repurposing. Second, combined anti-mycobacterial HDT strategies could benefit patients with mixed infections in endemic regions. Third, shared mechanistic insights may inform development of pan-mycobacterial host-targeted interventions applicable across the Mycobacterium genus.',
+        'The substantial overlap between leprosy and tuberculosis HDT targets underscores the shared mycobacterial host-pathogen interface. Both pathogens induce IDO1, exploit PD-1/PD-L1 signaling, drive MMP-mediated tissue damage, and modulate vitamin D receptor signaling.^16,33^ This convergence has important translational implications. First, HDT candidates validated for tuberculosis (where larger patient populations and research infrastructure enable clinical trials) may accelerate leprosy drug development through repurposing. Second, combined anti-mycobacterial HDT strategies could benefit patients with mixed infections in endemic regions. Third, shared mechanistic insights may inform development of pan-mycobacterial host-targeted interventions applicable across the Mycobacterium genus.',
         
         'Beyond the top-ranked targets, several additional candidates warrant discussion. VEGFA (rank 1, score 0.525) regulates angiogenesis in granulomas, with potential implications for drug penetration and immune cell trafficking. VDR (rank 6, score 0.271) mediates vitamin D-induced expression of cathelicidin (LL-37), an antimicrobial peptide with direct activity against M. leprae. Observational studies have associated vitamin D deficiency with leprosy susceptibility, and supplementation trials have shown modest benefits.^16^ MMP9 (rank 15, score 0.105) contributes to nerve damage through extracellular matrix degradation, making MMP inhibitors attractive for neuroprotection. However, MMP inhibitors have historically failed in clinical development due to musculoskeletal toxicity, necessitating novel delivery strategies (e.g., topical formulations for cutaneous lesions).'
     ]
@@ -371,7 +376,7 @@ def create_manuscript():
         
         'IDO1 Inhibitors: Epacadostat, the most clinically advanced IDO1 inhibitor, failed to improve outcomes in the Phase III ECHO-301 melanoma trial, raising questions about the therapeutic tractability of this target. However, the chronic infection context differs from acute cancer immunotherapy. A critical concern is IDO1\'s dual role: antimicrobial (through tryptophan starvation of intracellular pathogens) versus immunosuppressive (through kynurenine-mediated Treg induction). In leprosy, the balance appears tilted toward immunosuppression in lepromatous lesions, suggesting potential benefit from inhibition. Recommendation: IDO1 inhibition should be considered only post-MDT when bacterial load is controlled, with extensive preclinical testing in the armadillo model before human trials.',
         
-        'JAK Inhibitors: The most immediate safety concern is the well-documented risk of tuberculosis reactivation with Tofacitinib and Baricitinib, with TB occurring at 3-4 times the background rate in clinical trials. In TB-endemic areas (India, Brazil, Indonesia) where leprosy is also prevalent, this is a critical consideration. Mitigation requires TB screening (IGRA, chest X-ray) before initiation and regular symptom surveillance during treatment. Additionally, rifampicin (a standard MDT component) is a potent CYP3A4 inducer that reduces JAK inhibitor exposure by 50-70%, potentially compromising efficacy. Solutions include sequential therapy (HDT after MDT completion) or dose adjustment with pharmacokinetic studies to determine optimal dosing in the presence of rifampicin.'
+        'JAK Inhibitors: The most immediate safety concern is the well-documented risk of tuberculosis reactivation with Tofacitinib and Baricitinib, with TB occurring at 3-4 times the background rate in clinical trials.^34^ In TB-endemic areas (India, Brazil, Indonesia) where leprosy is also prevalent, this is a critical consideration. Mitigation requires TB screening (IGRA, chest X-ray) before initiation and regular symptom surveillance during treatment. Additionally, rifampicin (a standard MDT component) is a potent CYP3A4 inducer that reduces JAK inhibitor exposure by 50-70%, potentially compromising efficacy. Solutions include sequential therapy (HDT after MDT completion) or dose adjustment with pharmacokinetic studies to determine optimal dosing in the presence of rifampicin.'
     ]
     
     for text in safety_paras:
@@ -404,45 +409,60 @@ def create_manuscript():
     
     doc.add_page_break()
     
-    # ===== REFERENCES =====
+    # ===== REFERENCES - REORDERED SEQUENTIALLY =====
     doc.add_heading('REFERENCES', level=1)
     
     references = [
+        # 1-4: Introduction basics
         'World Health Organization. Leprosy elimination: an operational manual. Geneva: WHO; 2016.',
         'Lockwood DN, Suneetha S. Leprosy: too complex a disease for a simple elimination paradigm. Bull World Health Organ 2005; 83: 230-235.',
         'World Health Organization. Global leprosy update, 2022: moving towards a leprosy-free world. Wkly Epidemiol Rec 2023; 98: 409-430.',
         'Sermrittirong S, Van Brakel WH. How to reduce stigma in leprosy. Lepr Rev 2014; 85: 149-157.',
+        # 5-9: Clinical spectrum & reactions
         'Ridley DS, Jopling WH. Classification of leprosy according to immunity. Int J Lepr 1966; 34: 255-273.',
         'Scollard DM, et al. The continuing challenges of leprosy. Clin Microbiol Rev 2006; 19: 338-381.',
         'Walker SL, et al. Development and validation of a severity scale for leprosy type 1 reactions. PLoS Negl Trop Dis 2008; 2: e351.',
         'Walker SL, Lockwood DN. Leprosy type 1 (reversal) reactions. Lepr Rev 2008; 79: 372-386.',
         'Kahawita IP, et al. Leprosy type 1 reactions and ENL. An Bras Dermatol 2008; 83: 75-82.',
+        # 10-12: MDT
         'WHO Expert Committee on Leprosy: eighth report. WHO Tech Rep Ser 2012; 968: 1-61.',
         'Walker SL, et al. The role of thalidomide in ENL management. Lepr Rev 2007; 78: 197-215.',
         'Negera E, et al. Clinico-pathological features of ENL. PLoS Negl Trop Dis 2017; 11: e0006011.',
+        # 13-16: HDT concepts
         'Kaufmann SHE, et al. Host-directed therapies for bacterial and viral infections. Nat Rev Drug Discov 2018; 17: 35-56.',
         'Hawn TR, et al. Countering antibiotic resistance with host-directed therapeutics. Immunol Rev 2015; 264: 344-362.',
         'Zumla A, Maeurer M. Host-directed therapies for MDR-TB. Clin Infect Dis 2015; 61: 1432-1438.',
         'Wallis RS, Hafner R. Advancing host-directed therapy for tuberculosis. Nat Rev Immunol 2015; 15: 255-263.',
+        # 17: M. leprae genomics
         'Cole ST, et al. Massive gene decay in the leprosy bacillus. Nature 2001; 409: 1007-1011.',
-        'de Mattos Barbosa MG, et al. IDO and iron required for M. leprae survival. Microbes Infect 2017; 19: 505-514.',
-        'Palermo ML, et al. Increased Treg and down-regulatory molecules in LL. Am J Trop Med Hyg 2012; 86: 878-883.',
-        'Truman RW, Krahenbuhl JL. Viable M. leprae as a research reagent. Int J Lepr 2001; 69: 1-12.',
+        # 18: TB pipeline (our work)
         'Siddalingaiah HS. Multi-omics pipeline for TB HDT targets. Int J Tuberc Lung Dis 2024 (submitted).',
+        # 19-20: Methods - FAIR & GEO
         'Wilkinson MD, et al. The FAIR guiding principles. Sci Data 2016; 3: 160018.',
         'Barrett T, et al. NCBI GEO: archive for functional genomics data sets. Nucleic Acids Res 2013; 41: D991-D995.',
+        # 21-24: GEO datasets
         'Belone AF, et al. Genome-wide screening of mRNA expression in leprosy. Front Genet 2015; 6: 334.',
         'Montoya DJ, et al. Dual RNA-Seq of human leprosy lesions. Cell Rep 2019; 26: 3574-3585.',
         'Zavala K, et al. Blood transcriptomic profiles in leprosy. Sci Rep 2021; 11: 18715.',
         'Blischak JD, et al. Predicting susceptibility to tuberculosis. Sci Rep 2017; 7: 5702.',
+        # 25-27: Tools
         'Wu C, et al. BioGPS and MyGene.info. Nucleic Acids Res 2013; 41: D561-D565.',
         'Ochoa D, et al. Open Targets Platform. Nucleic Acids Res 2021; 49: D1302-D1310.',
         'Zdrazil B, et al. The ChEMBL Database in 2023. Nucleic Acids Res 2024; 52: D1180-D1192.',
-        'Hunter JD. Matplotlib: a 2D graphics environment. Comput Sci Eng 2007; 9: 90-95.',
-        'Thangaraju P, et al. Tofacitinib for chronic type II lepra reaction. Lepr Rev 2020; 91: 86-89.',
+        # 28-29: IDO1 validation
+        'de Mattos Barbosa MG, et al. IDO and iron required for M. leprae survival. Microbes Infect 2017; 19: 505-514.',
         'de Souza Sales J, et al. IDO role in LL immunosuppression. Clin Exp Immunol 2011; 165: 251-263.',
+        # 30-31: PDL1 validation
+        'Palermo ML, et al. Increased Treg and down-regulatory molecules in LL. Am J Trop Med Hyg 2012; 86: 878-883.',
         'Bobosha K, et al. T-cell regulation in lepromatous leprosy. PLoS Negl Trop Dis 2014; 8: e2773.',
+        # 32: JAK2/Tofacitinib
+        'Thangaraju P, et al. Tofacitinib for chronic type II lepra reaction. Lepr Rev 2020; 91: 86-89.',
+        # 33: TB-leprosy overlap
         'Cliff JM, et al. Human immune response to TB. Immunol Rev 2015; 264: 88-102.',
+        # 34: JAK inhibitor safety
+        'Winthrop KL, et al. Tuberculosis and other opportunistic infections in tofacitinib-treated patients. Ann Rheum Dis 2016; 75: 1133-1138.',
+        # 35: Matplotlib (optional)
+        'Hunter JD. Matplotlib: a 2D graphics environment. Comput Sci Eng 2007; 9: 90-95.',
     ]
     
     for i, ref in enumerate(references):
@@ -458,6 +478,7 @@ def create_manuscript():
     print(f'Created: {output_path}')
     print(f'Tables embedded: 3')
     print(f'Figures embedded: 4')
+    print(f'References: 35 (sequentially ordered)')
 
 if __name__ == '__main__':
     create_manuscript()
