@@ -84,7 +84,7 @@ def create_manuscript():
     # Metadata
     meta = doc.add_paragraph()
     meta.add_run('Word Count: ').bold = True
-    meta.add_run('3,150 words | ')
+    meta.add_run('3,850 words | ')
     meta.add_run('Tables: ').bold = True
     meta.add_run('3 | ')
     meta.add_run('Figures: ').bold = True
@@ -349,6 +349,49 @@ def create_manuscript():
     for text in discussion_paras:
         p = doc.add_paragraph()
         add_formatted_run(p, text)
+    
+    # ===== NEW SECTION 4.1: IMMUNOLOGICAL CONTEXT (Peer Review Addition) =====
+    doc.add_heading('4.1 Immunological Context and HDT Timing', level=2)
+    
+    immunology_paras = [
+        'Leprosy reactions occur in distinct immunological contexts that have critical implications for HDT selection and timing. Type 1 reactions (reversal reactions) involve upregulation of Th1 responses with increased IFN-γ, TNF-α, and IL-12 production as cell-mediated immunity strengthens during treatment. In this context, checkpoint inhibitors such as anti-PD-1/PD-L1 antibodies could potentially exacerbate inflammation and should be reserved for post-reaction periods or for lepromatous patients with persistent anergy. Conversely, Type 2 reactions (ENL) are characterized by immune complex deposition, complement activation, and excessive proinflammatory cytokine production (particularly TNF-α and IL-6). JAK inhibitors are mechanistically appropriate for ENL as they directly dampen cytokine signaling cascades.',
+        
+        'The timing of HDT administration requires careful consideration. We propose a stratified approach: (1) Prevention—during MDT for high-risk lepromatous patients with high bacterial index who are at greatest risk for reactions; (2) Treatment—JAK inhibitors for active steroid-refractory ENL as demonstrated by Thangaraju et al.^32^; (3) Maintenance—checkpoint modulation post-MDT completion for lepromatous patients to prevent relapse and enhance bacterial clearance. IDO1 inhibition may be contraindicated during active reactions as it could trigger immune reconstitution inflammatory syndrome (IRIS), similar to that observed in HIV/TB co-infection.^16^ Patient stratification by leprosy type, reaction history, and bacterial load is essential for safe HDT implementation.'
+    ]
+    
+    for text in immunology_paras:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+    
+    # ===== NEW SECTION 4.2: SAFETY CONSIDERATIONS (Peer Review Addition) =====
+    doc.add_heading('4.2 Safety Considerations', level=2)
+    
+    safety_paras = [
+        'Checkpoint Inhibitors: PD-1/PD-L1 blockade carries well-documented autoimmune risks, with immune-related adverse events (colitis, pneumonitis, hepatitis, thyroiditis) occurring in 10-20% of cancer patients receiving these agents. In the leprosy context, an additional concern is the potential to precipitate Type 1 reactions by enhancing Th1 responses. Mitigation strategies include excluding patients with autoimmune history, restricting use to lepromatous patients post-MDT, initiating at low doses with gradual escalation, and combining with corticosteroid prophylaxis. Close monitoring for both reaction symptoms and autoimmune manifestations is essential.',
+        
+        'IDO1 Inhibitors: Epacadostat, the most clinically advanced IDO1 inhibitor, failed to improve outcomes in the Phase III ECHO-301 melanoma trial, raising questions about the therapeutic tractability of this target. However, the chronic infection context differs from acute cancer immunotherapy. A critical concern is IDO1\'s dual role: antimicrobial (through tryptophan starvation of intracellular pathogens) versus immunosuppressive (through kynurenine-mediated Treg induction). In leprosy, the balance appears tilted toward immunosuppression in lepromatous lesions, suggesting potential benefit from inhibition. Recommendation: IDO1 inhibition should be considered only post-MDT when bacterial load is controlled, with extensive preclinical testing in the armadillo model before human trials.',
+        
+        'JAK Inhibitors: The most immediate safety concern is the well-documented risk of tuberculosis reactivation with Tofacitinib and Baricitinib, with TB occurring at 3-4 times the background rate in clinical trials. In TB-endemic areas (India, Brazil, Indonesia) where leprosy is also prevalent, this is a critical consideration. Mitigation requires TB screening (IGRA, chest X-ray) before initiation and regular symptom surveillance during treatment. Additionally, rifampicin (a standard MDT component) is a potent CYP3A4 inducer that reduces JAK inhibitor exposure by 50-70%, potentially compromising efficacy. Solutions include sequential therapy (HDT after MDT completion) or dose adjustment with pharmacokinetic studies to determine optimal dosing in the presence of rifampicin.'
+    ]
+    
+    for text in safety_paras:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+    
+    # ===== NEW SECTION 4.3: VEGFA DISCUSSION (Peer Review Addition) =====
+    doc.add_heading('4.3 Computational Scoring versus Biological Plausibility', level=2)
+    
+    p = doc.add_paragraph()
+    add_formatted_run(p, 'VEGFA ranked first in our prioritization (score 0.525), primarily driven by its high druggability score reflecting 1,193 known drugs targeting this pathway (predominantly oncology applications). However, biological plausibility for leprosy HDT is limited: only 4 PubMed publications link VEGFA to leprosy, with no functional studies in M. leprae models. Angiogenesis in granulomas is complex and context-dependent—both pro-inflammatory (enabling immune cell infiltration) and potentially beneficial for drug penetration. This discrepancy between computational rank and literature validation highlights a critical limitation: computational scores based on druggability do not equate to biological priority for a specific disease. We explicitly recommend that future studies prioritize IDO1, PDL1, and JAK2 based on their stronger literature validation over VEGFA despite lower computational scores. Future pipeline iterations should incorporate disease-specific biological plausibility weighting to better align computational output with translational potential.')
+    
+    p = doc.add_paragraph()
+    add_formatted_run(p, 'Similarly, BLK (B-lymphoid kinase) ranked 7th (score 0.270) despite having zero leprosy-specific publications. This represents a computational artifact where high general druggability inflates scores for targets with no disease-specific validation. Researchers using similar computational approaches should interpret high-ranking targets with caution and always perform systematic literature validation before advancing candidates to experimental studies.')
+    
+    # ===== NEW SECTION 4.4: LIMITATIONS (Peer Review Addition) =====
+    doc.add_heading('4.4 Limitations', level=2)
+    
+    p = doc.add_paragraph()
+    add_formatted_run(p, 'This study has several important limitations. First, computational predictions, while systematic and reproducible, require experimental validation in appropriate disease models. Second, M. leprae cannot be cultured in vitro, severely limiting drug screening capabilities and necessitating reliance on the armadillo model, which is expensive, slow (requiring 12-18 months for disease development), and ethically complex. Third, the composite scoring algorithm, while incorporating multiple evidence streams, uses weights that, despite sensitivity analysis, remain somewhat arbitrary. Fourth, literature validation depends on published studies and may miss recent unpublished findings or negative results. Fifth, pathway centrality was calculated from general protein-protein interaction networks (STRING v11.5) rather than leprosy-specific interactomes, which may not accurately reflect disease-specific pathway importance. Sixth, the identification of targets like BLK with high computational scores but zero disease-specific publications demonstrates that the pipeline can generate artifacts requiring manual curation. Finally, the overlap with tuberculosis targets, while potentially advantageous for repurposing, limits identification of leprosy-specific host factors that may be uniquely important for this disease.')
     
     # ===== CONCLUSIONS =====
     doc.add_heading('5. CONCLUSIONS', level=1)
