@@ -1,0 +1,42 @@
+project:
+  name: leprosy_hdt_discovery
+  run_tag: v1
+
+mode:
+  # host | pathogen | both
+  run_mode: host
+
+inputs:
+  # Minimal format: CSV columns: entity, logFC, pval, direction
+  # For host: entity = gene_symbol (e.g., IFNG)
+  signatures:
+    host:
+      - data/signatures/leprosy_host_signature.csv
+    pathogen: []
+
+host_mapping:
+  # Use MyGene.info to map gene_symbol -> Ensembl + UniProt
+  enabled: true
+  species: human
+  prefer_reviewed_uniprot: true
+
+pathogen_mapping:
+  enabled: false
+  note: "Leprosy pathogen (M. leprae) targets not included in v1."
+
+prioritization:
+  weights:
+    omics_strength: 0.35
+    opentargets_evidence: 0.25
+    druggability_proxy: 0.20
+    pathway_centrality: 0.10
+    replication: 0.10
+
+compound_search:
+  use_chembl: true
+  min_pchembl: 6.0
+  max_compounds_per_target: 50
+
+reports:
+  make_markdown: true
+  make_csv: true
